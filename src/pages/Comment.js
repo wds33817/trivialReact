@@ -9,11 +9,12 @@ export default function Comment() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (Number(score) <= 5 && comment.length <= 10) {
-      alert('Please provide a comment explaining why the exp was poor');
+      //alert('Please provide a comment explaining why the exp was poor');
+      submitBtnRef.current.disabled = true;
       return;
     }
     console.log('Form submitted!');
-    submitBtnRef.current.disabled = true;
+    //submitBtnRef.current.disabled = true;
     setComment('');
     setScore('10');
   };
@@ -24,8 +25,9 @@ export default function Comment() {
         <fieldset>
           <h2>Feedback Form</h2>
           <div className='Field'>
-            <label>Score: {score}⭐</label>
+            <label htmlFor='scoreInput'>Score: {score}⭐</label>
             <input
+              id='scoreInput'
               type='range'
               min='0'
               max='10'
