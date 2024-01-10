@@ -1,0 +1,7 @@
+.goalForm button {
+  display: inline-block;
+}
+
+.goalForm input {
+  width: 30%;
+}
