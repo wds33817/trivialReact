@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { Fragment, useRef, useState, useEffect } from 'react';
+
 import '../style/formStyle.css';
 import Nameform from './Nameform';
 // uncontrolled inputs
@@ -11,10 +12,39 @@ export default function Form() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input ref={inputRef} type='text' />
-      <button type='submit'>Submit</button>
+    <Fragment>
+      <form onSubmit={handleSubmit}>
+        <input ref={inputRef} type='text' />
+        <button type='submit'>Submit</button>
+      </form>
+
       <Nameform />
-    </form>
+      <Statistics />
+    </Fragment>
+  );
+}
+
+function Statistics() {
+  const [btcData, setBtcData] = useState({});
+
+  const fetchData = () => {
+    fetch(`https://api.coindesk.com/v1/bpi/currentprice.json`)
+      .then((response) => response.json())
+      .then((jsonData) => setBtcData(jsonData.bpi.USD))
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+  return (
+    <>
+      <h1>Current BTC/USD data</h1>
+      <p>Code: {btcData.code}</p>
+      <p>Symbol: {btcData.symbol}</p>
+      <p>Rate: {btcData.rate}</p>
+      <p>Description: {btcData.description}</p>
+      <p>Rate Float: {btcData.rate_float}</p>
+    </>
   );
 }
