@@ -37,14 +37,25 @@ function Statistics() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const rateFloat = btcData.rate
+    ? parseFloat(btcData.rate.replace(/,/g, ''))
+    : 0;
+
   return (
     <>
       <h1>Current BTC/USD data</h1>
-      <p>Code: {btcData.code}</p>
-      <p>Symbol: {btcData.symbol}</p>
-      <p>Rate: {btcData.rate}</p>
-      <p>Description: {btcData.description}</p>
-      <p>Rate Float: {btcData.rate_float}</p>
+      {rateFloat > 0 ? (
+        <>
+          <p>Code: {btcData.code}</p>
+          <p>Symbol: {btcData.symbol}</p>
+          <p>Rate: {btcData.rate}</p>
+          <p>Description: {btcData.description}</p>
+          <p>Rate Float: {btcData.rate_float}</p>
+        </>
+      ) : (
+        <p>Data pending ...</p>
+      )}
     </>
   );
 }
